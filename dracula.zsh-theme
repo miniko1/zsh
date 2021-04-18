@@ -20,13 +20,13 @@ async_init
 
 # Options {{{
 # Set to 1 to show the date
-DRACULA_DISPLAY_TIME=${DRACULA_DISPLAY_TIME:-0}
+DRACULA_DISPLAY_TIME=${DRACULA_DISPLAY_TIME:-1}
 
 # Set to 1 to show the 'context' segment
-DRACULA_DISPLAY_CONTEXT=${DRACULA_DISPLAY_CONTEXT:-0}
+DRACULA_DISPLAY_CONTEXT=${DRACULA_DISPLAY_CONTEXT:-1}
 
 # Changes the arrow icon
-DRACULA_ARROW_ICON=${DRACULA_ARROW_ICON:-➜}
+DRACULA_ARROW_ICON=${DRACULA_ARROW_ICON:-}
 
 # function to detect if git has support for --no-optional-locks
 dracula_test_git_optional_lock() {
@@ -66,12 +66,12 @@ PROMPT='%(1V:%F{yellow}:%(?:%F{green}:%F{red}))${DRACULA_ARROW_ICON}'
 dracula_time_segment() {
   if (( DRACULA_DISPLAY_TIME )); then
     if [[ -z "$TIME_FORMAT" ]]; then
-      TIME_FORMAT=" %-H:%M"
+      TIME_FORMAT=`date +"%m-%d %T %A"`
       
       # check if locale uses AM and PM
-      if ! locale -ck LC_TIME | grep 'am_pm=";"' > /dev/null; then
-        TIME_FORMAT=" %-I:%M%p"
-      fi
+      # if ! locale -ck LC_TIME | grep 'am_pm=";"' > /dev/null; then
+      #   TIME_FORMAT=" %-I:%M%p"
+      # fi
     fi
 
     print -P "%D{$TIME_FORMAT}"
@@ -92,7 +92,7 @@ dracula_context() {
   fi
 }
 
-PROMPT+='%F{magenta}%B$(dracula_context)'
+PROMPT+='%F{blue}%B$(dracula_context)'
 # }}}
 
 # Directory segment {{{
